@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .login-container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            box-sizing: border-box;
+        }
+
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-container">
+        <h2>Login</h2>
+        <form id="loginForm">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="button" onclick="login()">Login</button>
+        </form>
+        <p id="error-message" style="color: red;"></p>
+
+        <!-- <button onclick="showLocation(10.960078, 78.076607)">Show Default Location</button> -->
+        <p id="location"></p>
+
+        <div id="lati"></div>
+    </div>
+    
+    <script>
+        function login() {
+
+            
+            // showLocation(10.960078, 78.076607)
+
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const errorMessage = document.getElementById("error-message");
+
+            // Simple validation for demonstration purposes
+            if (username === "jeeva" && password === "") {
+
+        // --------------------------------------------------  find location above  --------------------------
+
+
+        getLocation()
+
+ function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(showPosition, showError);
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        }
+
+        function showPosition(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            errorMessage.textContent = "";
+            // document.getElementById("lati").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+
+            if(latitude==13.0318336 && longitude == 80.2062336){ 
+                // for testing latitude and longtidu above 
+
+            // if(latitude==10.960078 && longitude == 78.076607){
+               
+                // alert("Login successful!");
+                // Redirect to another page upon successful login
+                // window.location.href = "https://jeeva19z.github.io/currency-converter/";
+                alert("secess")
+                window.location.href = "https://www.google.com/";
+ 
+
+            }
+            else{
+                
+            // document.getElementById("location").innerHTML = "Latitude: " + latitude + "<br>Longitude: " + longitude;
+            
+        showLocation(latitude, longitude)
+
+                
+            }
+
+          
+        // console.log(latitude)
+
+        }
+
+        function showError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("User denied the request for Geolocation.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    alert("Location information is unavailable.");
+                    break;
+                case error.TIMEOUT:
+                    alert("The request to get user location timed out.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    alert("An unknown error occurred.");
+                    break;
+            }
+        }
+        // --------------------------------------------------  find location above  --------------------------
+
+               
+            } else {
+                errorMessage.textContent = "Invalid username or password. Please try again.";
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+        
+        // --------------------------------------------------  show location below  --------------------------
+
+                async function showLocation(latitude, longitude) {
+            try {
+                const apiKey = '100bb6c98c1643a4b9a2223273b0c788';
+                const apiUrl = `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=${apiKey}`;
+
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                if (response.ok && data.results.length > 0) {
+                    const address = data.results[0].formatted;
+                    document.getElementById("location").innerHTML = `<span style="color:red">Your current Location of:   ${address}</span>
+                    
+                    <br><br> <br>
+                    
+                    
+                    <span style="font-weight:900">Kindly move to your login address of </span>" unnamed road, Karur District, Karur - 639001, Tamil Nadu, India   `;
+                } else {
+                    document.getElementById("location").innerHTML = "Could not retrieve location information.";
+                }
+            } catch (error) {
+                console.error("Error:", error);
+            }
+        }
+
+
+
+
+       
+
+
+        // --------------------------------------------------  find location above  --------------------------
+    </script>
+</body>
+
+</html>
